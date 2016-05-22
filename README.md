@@ -1,6 +1,6 @@
 # HN Saved Links Export
 
-This is a python script to export your saved links from [Hacker News](https://news.ycombinator.com/news). What's a saved link, you ask? Any story that you upvote on HN is added to your saved links. You can access your them from `https://news.ycombinator.com/saved?id=<username>` where `<username>` is your HN username.
+This is a python script to export your saved links from [Hacker News](https://news.ycombinator.com/news). What's a saved link, you ask? Any story that you upvote on HN is added to your saved links. You can access them from `https://news.ycombinator.com/saved?id=<username>` where `<username>` is your HN username.
 
 ### Instructions
 1. This script depends on `lxml` and `requests` packages, which should be installed by default on most systems. If not, install them like so:
