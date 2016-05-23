@@ -9,17 +9,24 @@ This is a python script to export your saved links from [Hacker News](https://ne
  ```
  You might have to use `sudo` with that command on Linux.
 
-2. Obtain the cookie while you are logged in to HN. You can do it by loading the page with the Networks tab of your browser's developer tools open. Check [this](http://storage8.static.itmages.com/i/16/0522/h_1463922946_3928666_d21ffff115.png) image.
-
-3. Run the script and profit!
+2. Run the script and enter your HN login credentials.
  ```bash
  $ python export_links.py
+ Enter your HN account details:
+ Username: amjd
+ Password: [password will be hidden]
  ```
 
+3. After all the links are processed, you will be asked to enter an output file name. Use any name with the  extension `.json` or `.csv`, or leave blank to go with the default `links.json`. The output file will be saved in the appropriate format.
+
+4. Profit!
+
+P.S.: Your username and password are **100% safe** and are sent over HTTPS. You can study the source code of this small script to verify that.
+
 ### Todo
-- Add support for saving file as CSV
-- Detect the number of pages automatically
-- Add option to use username and password instead of cookie
+- [x] Add support for saving file as CSV
+- [x] Detect the number of pages automatically
+- [x] Add option to use username and password instead of cookie
 
 
 ### Similar

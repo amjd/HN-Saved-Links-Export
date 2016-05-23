@@ -32,29 +32,35 @@ def save_csv(saved_links, file_name):
 
 
 def main():
-    cookie = raw_input("HN cookie: ")
-    username_re = re.compile(r"user=([a-zA-Z0-9_\-]+)&")
+    session = requests.Session()
+    print "Enter your HN account details:"
+    username = raw_input("Username: ")
+    password = getpass()
 
-    if username_re.findall(cookie):
-        username = username_re.findall(cookie)[0]
-    else:
-        print "Cookie doesn't seem to be correct. Make sure you have copied the cookie properly."
-        main()
-
-    num_of_pages = int(raw_input("Number of pages: "))
+    try:
+        print "Logging in..."
+        r = session.post("https://news.ycombinator.com/login", data={"acct": username,
+            "pw": password})
+        if session.cookies.get("user", None) is None:
+            print "Error logging in. Verify the credentials and try again."
+            sys.exit(1)
+        print "Logged in successfully."
+    except:
+        print "Error logging in."
+        sys.exit(1)
 
     url = "{}saved?id={}&p=".format(BASE_URL, username)
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0",
-        "Cookie": cookie
     }
 
     saved_links = list()
     links_processed = 0
+    i = 1
 
-    for i in range(1, num_of_pages + 1):
+    while True:
         try:
-            r = requests.get(url + str(i), headers=headers)
+            r = session.get(url + str(i), headers=headers)
 
             tree = html.fromstring(r.text)
 
@@ -70,7 +76,7 @@ def main():
             # Number of links on the page
             n = len(tree_score)
 
-            print "Page {}. Number of links: {}".format(i, n)
+            print "Processing page {}. Number of links found: {}".format(i, n)
 
             for j in range(n):
                 tree_subtext_each = tree_subtext[j].cssselect("a")
@@ -103,6 +109,12 @@ def main():
 
         except:
             print "Error getting data for page {}".format(i)
+
+        if len(tree_title) < 61:
+            break
+        else:
+            i += 1
+
 
     if links_processed < 1:
         print "Could not retrieve any of the links. Check if you actually have any saved links."
