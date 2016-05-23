@@ -1,5 +1,10 @@
+import csv
 import json
+import re
 import requests
+import sys
+
+from getpass import getpass
 from lxml import html
 
 BASE_URL = "https://news.ycombinator.com/"
@@ -17,12 +22,25 @@ def save_json(saved_links, file_name):
 
 
 def save_csv(saved_links, file_name):
-    pass
+    data = [(link["number"], link["title"], link["url"], link["points"], link["comments"],
+             link["comments_url"], link["author"], link["age"]) for link in saved_links]
+    with open(file_name, 'w') as f:
+        writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC, delimiter=',')
+        writer.writerows(data)
+
+    print "Links saved to: {}".format(file_name)
 
 
 def main():
-    username = raw_input("HN username: ")
     cookie = raw_input("HN cookie: ")
+    username_re = re.compile(r"user=([a-zA-Z0-9_\-]+)&")
+
+    if username_re.findall(cookie):
+        username = username_re.findall(cookie)[0]
+    else:
+        print "Cookie doesn't seem to be correct. Make sure you have copied the cookie properly."
+        main()
+
     num_of_pages = int(raw_input("Number of pages: "))
 
     url = "{}saved?id={}&p=".format(BASE_URL, username)
@@ -41,7 +59,7 @@ def main():
             tree = html.fromstring(r.text)
 
             # Part that contains the title and url for the stories
-            tree_title = tree.cssselect(".title a")
+            tree_title = tree.cssselect(".title")
 
             # Part that contains metadata such as author, no. of comments, etc.
             tree_subtext = tree.cssselect(".subtext")
@@ -56,10 +74,12 @@ def main():
 
             for j in range(n):
                 tree_subtext_each = tree_subtext[j].cssselect("a")
+                tree_title_each = tree_title[2 * j + 1].cssselect("a")
 
                 link_dict = {
-                    "title": tree_title[j * 2].text_content(),
-                    "url": tree_title[j * 2].values()[0],
+                    "number": int(tree_title[2 * j].text_content()[:-1]),
+                    "title": tree_title_each[0].text_content().encode("utf-8"),
+                    "url": tree_title_each[0].values()[0],
                     "points": int(tree_score[j].text_content().split()[0]),
                     "author": tree_subtext_each[0].text_content(),
                     "age": tree_subtext_each[1].text_content(),
@@ -84,7 +104,11 @@ def main():
         except:
             print "Error getting data for page {}".format(i)
 
-    print "Processed {} links".format(links_processed)
+    if links_processed < 1:
+        print "Could not retrieve any of the links. Check if you actually have any saved links."
+        sys.exit(1)
+    else:
+        print "Processed {} links".format(links_processed)
 
     print "Enter the file name in the next line. Use extension '.json' for JSON, or '.csv' for CSV."
     file_name = raw_input("File name (default: links.json): ")
