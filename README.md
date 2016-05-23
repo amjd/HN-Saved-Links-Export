@@ -23,6 +23,51 @@ This is a python script to export your saved links from [Hacker News](https://ne
 
 P.S.: Your username and password are **100% safe** and are sent over HTTPS. You can study the source code of this small script to verify that.
 
+### Sample output
+JSON:
+```json
+{
+  "total": 2661,
+  "links": [
+    {
+      "author": "coloneltcb",
+      "url": "https://m.signalvnoise.com/getting-from-%EF%B8%8F-%EF%B8%8F-to-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F-%EF%B8%8F-c65cc3bb7cb1#.rgrwe5cnw",
+      "age": "2 days ago",
+      "title": "How to ask for reviews without feeling icky about it",
+      "comments_url": "https://news.ycombinator.com/item?id=11740967",
+      "number": 1,
+      "comments": 28,
+      "points": 79
+    },
+    {
+      "author": "adventured",
+      "url": "http://www.bloomberg.com/news/articles/2016-05-22/modi-s-mini-shuttle-set-to-blast-into-elon-musk-s-race-for-space",
+      "age": "7 hours ago",
+      "title": "India is set to launch a scale model of a reusable spacecraft on Monday",
+      "comments_url": "https://news.ycombinator.com/item?id=11751776",
+      "number": 2,
+      "comments": 43,
+      "points": 117
+    },
+
+
+    "..."
+    
+    
+    {
+      "author": "lydiahan",
+      "url": "http://www.linkedin.com/today/post/article/20131029100222-95015-my-first-job-fired-and-rehired-on-day-1?trk=tod-home-art-list-small_1",
+      "age": "931 days ago",
+      "title": "My First Job: Fired and Rehired on Day 1",
+      "comments_url": "https://news.ycombinator.com/item?id=6667202",
+      "number": 2661,
+      "comments": 113,
+      "points": 199
+    }
+  ]
+}
+```
+
 ### Todo
 - Add CLI options
 
