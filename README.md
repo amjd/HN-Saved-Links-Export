@@ -24,9 +24,7 @@ This is a python script to export your saved links from [Hacker News](https://ne
 P.S.: Your username and password are **100% safe** and are sent over HTTPS. You can study the source code of this small script to verify that.
 
 ### Todo
-- [x] Add support for saving file as CSV
-- [x] Detect the number of pages automatically
-- [x] Add option to use username and password instead of cookie
+- Add CLI options
 
 
 ### Similar
