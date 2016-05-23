@@ -107,14 +107,12 @@ def main():
                 saved_links.append(link_dict)
                 links_processed += 1
 
+                if len(tree_title) < 61:
+                    break
         except:
             print "Error getting data for page {}".format(i)
 
-        if len(tree_title) < 61:
-            break
-        else:
-            i += 1
-
+        i += 1
 
     if links_processed < 1:
         print "Could not retrieve any of the links. Check if you actually have any saved links."
