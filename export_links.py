@@ -76,6 +76,10 @@ def main():
             # Number of links on the page
             n = len(tree_score)
 
+            if n == 0:
+                print "Processing page {}. No links found.".format(i)
+                break
+
             print "Processing page {}. Number of links found: {}".format(i, n)
 
             for j in range(n):
@@ -107,10 +111,11 @@ def main():
                 saved_links.append(link_dict)
                 links_processed += 1
 
-                if len(tree_title) < 61:
-                    break
+            if n < 30:
+                break
         except:
             print "Error getting data for page {}".format(i)
+            sys.exit(1)
 
         i += 1
 
