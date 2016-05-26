@@ -1,7 +1,10 @@
+#!/usr/bin/env python
+
 import csv
 import json
 import re
 import requests
+import signal
 import sys
 
 from getpass import getpass
@@ -9,6 +12,9 @@ from lxml import html
 
 BASE_URL = "https://news.ycombinator.com/"
 
+def signal_handler(signal, frame):
+    print('\nExiting...')
+    sys.exit(0)
 
 def save_json(saved_links, file_name):
     result = {
@@ -32,6 +38,9 @@ def save_csv(saved_links, file_name):
 
 
 def main():
+    # Gracefully handle KeyboardInterrupt (Ctrl + C)
+    signal.signal(signal.SIGINT, signal_handler)
+
     session = requests.Session()
     print "Enter your HN account details:"
     username = raw_input("Username: ")
