@@ -77,3 +77,8 @@ JSON:
 
 ### Contribute
 If you think of any improvements, create an issue or send a pull request. :)
+
+### Python3
+
+Adjusted, python3 compatible.
+
