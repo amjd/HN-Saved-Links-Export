@@ -1,3 +1,3 @@
-lxml>=3.3.3
-requests>=2.9.1
-cssselect
+cssselect==1.1.0
+lxml==4.5.0
+requests==2.23.0

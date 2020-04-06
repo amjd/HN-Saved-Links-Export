@@ -1,2 +1,5 @@
 *.pyc
 pycache/
+venv/
+.vscode/
+links.json
