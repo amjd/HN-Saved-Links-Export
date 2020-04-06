@@ -48,7 +48,9 @@ def main():
 
     try:
         print("Logging in...")
+
         r = session.post(BASE_URL + "login", data={"acct": username, "pw": password})
+
         if session.cookies.get("user", None) is None:
             print("Error logging in. Verify the credentials and try again.")
             sys.exit(1)
@@ -57,7 +59,8 @@ def main():
         print("Error logging in.")
         sys.exit(1)
 
-    url = "{}saved?id={}&p=".format(BASE_URL, username)
+#   url = "{}saved?id={}&p=".format(BASE_URL, username)
+    url = "{}upvoted?id={}&p=".format(BASE_URL, username)
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0",
     }
@@ -68,6 +71,7 @@ def main():
 
     while True:
         try:
+            print("Get url: ", url + str(i))
             r = session.get(url + str(i), headers=headers)
 
             tree = html.fromstring(r.text)
@@ -123,7 +127,7 @@ def main():
                 break
         except:
             print("Error getting data for page {}".format(i))
-            sys.exit(1)
+            break
 
         i += 1
 
