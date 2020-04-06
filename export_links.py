@@ -48,8 +48,9 @@ def main():
 
     try:
         print("Logging in...")
-        r = session.post("https://news.ycombinator.com/login", data={"acct": username,
-            "pw": password})
+
+        r = session.post(BASE_URL + "login", data={"acct": username, "pw": password})
+
         if session.cookies.get("user", None) is None:
             print("Error logging in. Verify the credentials and try again.")
             sys.exit(1)
@@ -126,8 +127,7 @@ def main():
                 break
         except:
             print("Error getting data for page {}".format(i))
-            break;
-            #sys.exit(1)
+            break
 
         i += 1
 
