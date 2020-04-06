@@ -24,7 +24,7 @@ def save_json(saved_links, file_name):
     with open(file_name, 'w') as f:
         json.dump(result, f)
 
-    print "Links saved to: {}".format(file_name)
+    print("Links saved to: {}".format(file_name))
 
 
 def save_csv(saved_links, file_name):
@@ -34,7 +34,7 @@ def save_csv(saved_links, file_name):
         writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC, delimiter=',')
         writer.writerows(data)
 
-    print "Links saved to: {}".format(file_name)
+    print("Links saved to: {}".format(file_name))
 
 
 def main():
@@ -42,20 +42,19 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
 
     session = requests.Session()
-    print "Enter your HN account details:"
-    username = raw_input("Username: ")
+    print("Enter your HN account details:")
+    username = input("Username: ")
     password = getpass()
 
     try:
-        print "Logging in..."
-        r = session.post("https://news.ycombinator.com/login", data={"acct": username,
-            "pw": password})
+        print("Logging in...")
+        r = session.post(BASE_URL + "login", data={"acct": username, "pw": password})
         if session.cookies.get("user", None) is None:
-            print "Error logging in. Verify the credentials and try again."
+            print("Error logging in. Verify the credentials and try again.")
             sys.exit(1)
-        print "Logged in successfully."
+        print("Logged in successfully.")
     except:
-        print "Error logging in."
+        print("Error logging in.")
         sys.exit(1)
 
     url = "{}saved?id={}&p=".format(BASE_URL, username)
@@ -86,10 +85,10 @@ def main():
             n = len(tree_score)
 
             if n == 0:
-                print "Processing page {}. No links found.".format(i)
+                print("Processing page {}. No links found.".format(i))
                 break
 
-            print "Processing page {}. Number of links found: {}".format(i, n)
+            print("Processing page {}. Number of links found: {}".format(i, n))
 
             for j in range(n):
                 tree_subtext_each = tree_subtext[j].cssselect("a")
@@ -123,19 +122,19 @@ def main():
             if n < 30:
                 break
         except:
-            print "Error getting data for page {}".format(i)
+            print("Error getting data for page {}".format(i))
             sys.exit(1)
 
         i += 1
 
     if links_processed < 1:
-        print "Could not retrieve any of the links. Check if you actually have any saved links."
+        print("Could not retrieve any of the links. Check if you actually have any saved links.")
         sys.exit(1)
     else:
-        print "Processed {} links".format(links_processed)
+        print("Processed {} links".format(links_processed))
 
-    print "Enter the file name in the next line. Use extension '.json' for JSON, or '.csv' for CSV."
-    file_name = raw_input("File name (default: links.json): ")
+    print("Enter the file name in the next line. Use extension '.json' for JSON, or '.csv' for CSV.")
+    file_name = input("File name (default: links.json): ")
 
     if file_name == "":
         file_name = "links.json"
