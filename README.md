@@ -1,5 +1,6 @@
-# HN Saved Links Export
+[![DeepSource](https://deepsource.io/gh/amjd/HN-Saved-Links-Export.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/amjd/HN-Saved-Links-Export/?ref=repository-badge)
 
+# HN Saved Links Export
 This is a python script to export your saved links from [Hacker News](https://news.ycombinator.com/news). What's a saved link, you ask? Any story that you upvote on HN is added to your saved links. You can access them at `https://news.ycombinator.com/upvoted?id=<your username>` while logged in.
 
 ### Instructions
