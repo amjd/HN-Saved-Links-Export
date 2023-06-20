@@ -6,6 +6,7 @@ import re
 import requests
 import signal
 import sys
+import time
 
 from getpass import getpass
 from lxml import html
@@ -148,6 +149,8 @@ def main():
             break
 
         i += 1
+
+        time.sleep(5)  # Wait a 5-second sleep for the page to fully load
 
     if links_processed < 1:
         print(
