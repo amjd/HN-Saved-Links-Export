@@ -6,13 +6,15 @@ import re
 import requests
 import signal
 import sys
-import time
 
 from getpass import getpass
 from lxml import html
 
 BASE_URL = "https://news.ycombinator.com"
 
+headers = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:75.0) Gecko/20100101 Firefox/75.0",
+}
 
 def signal_handler(signal, frame):
     print("\nStopping...\n")
@@ -47,6 +49,17 @@ def save_csv(saved_links, file_name):
 
     print(f"\nLinks saved to: {file_name}")
 
+def wait_for_page_load(url):
+    session = requests.Session()
+    while True:
+        r = session.get(url, headers=headers)
+        if r.status_code == 200:
+            tree = html.fromstring(r.text)
+            form_element = tree.cssselect("form[method='get'][action='//hn.algolia.com/']")
+            if form_element:
+                break
+        else:
+            break
 
 def main():
     # Gracefully handle KeyboardInterrupt (Ctrl + C)
@@ -71,9 +84,6 @@ def main():
         sys.exit(1)
 
     url = f"{BASE_URL}/upvoted?id={username}&p="
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:75.0) Gecko/20100101 Firefox/75.0",
-    }
 
     saved_links = list()
     links_processed = 0
@@ -149,8 +159,6 @@ def main():
             break
 
         i += 1
-
-        time.sleep(5)  # Wait a 5-second sleep for the page to fully load
 
     if links_processed < 1:
         print(
