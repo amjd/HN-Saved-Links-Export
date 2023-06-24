@@ -136,7 +136,7 @@ def main():
                 # or 4.
                 num_subtext = len(tree_subtext_each)
                 link_dict["comments_url"] = (
-                    BASE_URL + tree_subtext_each[num_subtext - 1].values()[0]
+                    BASE_URL + "/" + tree_subtext_each[num_subtext - 1].values()[0]
                 )
 
                 if (
