@@ -3,3 +3,4 @@ pycache/
 venv/
 .vscode/
 links.json
+comments.json
