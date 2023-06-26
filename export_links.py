@@ -159,6 +159,7 @@ def main():
             break
 
         i += 1
+        wait_for_page_load(url)
 
     if links_processed < 1:
         print(
